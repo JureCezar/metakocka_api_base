@@ -12,6 +12,7 @@ Attribute                 | Type | Notes| MK SLO |
 | product_code_list | String | Limit respond by list of MK codes (or webshops SKU), separater with comma. | / |
 | product_mk_id_list | String | Limit respond by list of MK ID, separater with comma | / |
 | return\_expect\_order\_delivery\_date | bool | Response will have additional attribute "order_in_delivery" with a list of amounts and delivery dates per returned products. | / |
+| return\_reservation\_without\_amount | bool | When set to true, the response will return products that are currently out of stock. | / |
 
 If MetaKocka company is using reservations, amount will be return as :
 * amount - stock amount
@@ -297,6 +298,42 @@ Respond :
             "warehouse_id": "1600263862",
             "warehouse_mark": "nas1",
 	    "status": "Odprta"
+        }
+    ]
+}
+```
+
+## 1.1 With return_reservation_without_amount
+
+Request :
+``` javascript
+{
+    "secret_key":"my_secret_key",
+    "company_id":"16",
+    "wh_id_list":"1600000311",
+    "return_reservation_without_amount":"true"
+}
+```
+Respond :
+``` javascript
+{
+    "opr_code": "0",
+    "opr_time_ms": "13",
+    "wh_id_list": "1600000311",
+    "offset": "0",
+    "limit": "1000",
+    "stock_list_count": "1",
+    "stock_list": [
+        {
+            "warehouse_id": "1600000311",
+            "mk_id": "1600000206",
+            "count_code": "art_cenik_test",
+            "code": "art_cenik_test_2",
+            "title": "art_cenik_test_2",
+            "amount": "2",
+            "reserved_amount": "4",
+            "free_amount": "-2",
+            "unit": "stor"
         }
     ]
 }
